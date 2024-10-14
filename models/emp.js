@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
-const ObjectId = Schema.ObjectId;
 
 const empSchema = new Schema({
     name:{
@@ -11,7 +10,7 @@ const empSchema = new Schema({
     email:{
         type:String,
         required:true,
-        isUnique:true
+        Unique:true
     },
     phone:{
         type:String,

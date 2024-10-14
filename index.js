@@ -16,4 +16,4 @@ app.use(express.json())
 
 app.use('/emp', router)
 
-app.listen(PORT, ()=>console.log('server initiated'))
+app.listen(PORT, ()=>console.log('server initiated at', PORT))

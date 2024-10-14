@@ -27,19 +27,26 @@ router.get('/:name', async (req, res) => {
 })
 
 router.put('/update/:name', async (req, res) => {
-    const data = {...req.body};
-    const result = await emp.findOneAndUpdate({name:req.params.name}, data, {upsert: false});
+    const data = { ...req.body };
+    const result = await emp.findOneAndUpdate({ name: req.params.name }, data, { upsert: false });
 
-    if(result === null){
-        res.status(404).json({msg:"no such data found"})
-    }else{
-        res.status(200).json({msg:'Data has updated please refresh', result})
+    if (result === null) {
+        res.status(404).json({ msg: "no such data found" })
+    } else {
+        res.status(200).json({ msg: 'Data has updated please refresh', result })
     }
 })
 
 router.delete('/delete/:id', async (req, res) => {
-    const result = await emp.deleteOne({ _id: req.params.id });
-    return res.status(200).json({ msg: `${req.params.name} has deleted from database` })
+    const id = req.params.id
+    try {
+        const { name } = await emp.findOne({ _id: id })
+        const result = await emp.deleteOne({ _id: id });
+        console.log(result)
+        return res.status(200).json({ msg: `${name} has deleted from database` })
+    } catch (err) {
+        res.status(400).json({ msg: "data not found!, make sure you have insert rightful _id" })
+    }
 })
 
 
